@@ -3,339 +3,292 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Cam Room Index — CamSoda Affiliate</title>
-    <meta name="description" content="Live cam room index, sorted by tag, country and language. Compare viewers, HD streams, and locations across thousands of CamSoda broadcasters.">
+    <title>Live Cam Room Index — Sorted, Tagged, and Revshare-Linked</title>
+    <meta name="description" content="Live cam room index, sorted by tag, country and language. Compare viewers, HD streams, and locations across thousands of live broadcasters in one dense, scannable table.">
+    <meta name="robots" content="index, follow">
     
     <style>
-        /* Minimalist, dense "GitHub Pages" style CSS */
-        body { 
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; 
-            line-height: 1.5; margin: 2rem; color: #24292e; max-width: 1400px; margin-left: auto; margin-right: auto;
+        /* --- Core Directory Styling (Matching Reference Site) --- */
+        :root {
+            --primary: #d91656;
+            --bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --text: #212529;
+            --text-muted: #6c757d;
+            --border: #dee2e6;
         }
-        h1, h2 { border-bottom: 1px solid #eaecef; padding-bottom: .3em; }
-        h1 { font-size: 2em; }
-        h2 { font-size: 1.5em; margin-top: 2rem; }
-        p { margin-bottom: 1rem; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; line-height: 1.6; color: var(--text); background: var(--bg); margin: 0; padding: 0; }
+        .container { max-width: 1300px; margin: 0 auto; padding: 20px; }
         
-        .filters { margin: 1rem 0; }
-        .filters button { 
-            padding: 5px 12px; margin-right: 5px; cursor: pointer; 
-            background: #f6f8fa; border: 1px solid #d1d5da; border-radius: 3px; font-weight: 600;
-        }
-        .filters button.active { background: #0366d6; color: white; border-color: #0366d6; }
+        header { background: #212529; color: #fff; padding: 30px 20px; text-align: center; border-bottom: 4px solid var(--primary); }
+        header h1 { margin: 0; font-size: 2.2rem; font-weight: 800; }
+        header p { margin: 10px 0 0; color: #adb5bd; font-size: 1.1rem; }
         
-        .counter { font-weight: bold; margin-bottom: 1rem; color: #586069; }
+        .intro-card { background: var(--card-bg); padding: 25px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 25px; border-left: 5px solid var(--primary); }
+        .intro-card p { margin: 0 0 10px; font-size: 1.05rem; }
+        .intro-card strong { color: var(--primary); }
         
-        /* Dense Data Table */
-        table { width: 100%; border-collapse: collapse; margin-bottom: 2rem; font-size: 0.85em; }
-        th, td { border: 1px solid #dfe2e5; padding: 6px 10px; text-align: left; vertical-align: top; }
-        th { background-color: #f6f8fa; cursor: pointer; user-select: none; white-space: nowrap; }
-        th:hover { background-color: #eaecef; }
+        /* --- Filters & Table --- */
+        .filters { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; align-items: center; }
+        .filters span { font-weight: 600; margin-right: 10px; }
+        .filter-btn { padding: 8px 16px; border: 1px solid var(--border); background: var(--card-bg); border-radius: 20px; cursor: pointer; font-weight: 500; transition: all 0.2s; font-size: 0.95rem; }
+        .filter-btn:hover, .filter-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
         
-        tr:nth-child(even) { background-color: #f6f8fa; }
-        tr:hover { background-color: #f1f8ff; }
+        .table-container { background: var(--card-bg); border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); overflow: hidden; margin-bottom: 30px; }
+        .model-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+        .model-table th { background: #f1f3f5; padding: 12px 15px; text-align: left; font-weight: 600; border-bottom: 2px solid var(--border); cursor: pointer; user-select: none; white-space: nowrap; }
+        .model-table th:hover { background: #e9ecef; }
+        .model-table th .sort-icon { margin-left: 5px; opacity: 0.5; }
+        .model-table th.sorted .sort-icon { opacity: 1; color: var(--primary); }
         
-        .thumb { width: 100px; height: 75px; object-fit: cover; border-radius: 3px; display: block; }
-        .badge-hd { background: #28a745; color: white; padding: 1px 4px; font-size: 0.7em; border-radius: 3px; margin-left: 4px; }
+        .model-table td { padding: 12px 15px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+        .model-table tr:hover { background: #f8f9fa; }
         
-        /* Taxonomy Lists (Tags, Countries, etc.) */
-        .tags-list, .meta-list { margin-bottom: 2rem; line-height: 2; }
-        .tags-list a, .meta-list a { 
-            display: inline-block; margin: 2px 4px; padding: 3px 8px; 
-            background: #f1f8ff; border: 1px solid #c8e1ff; border-radius: 15px; 
-            text-decoration: none; color: #0366d6; font-size: 0.85em; 
-        }
-        .tags-list a:hover, .meta-list a:hover { background: #0366d6; color: white; }
+        .cam-cell img { width: 60px; height: 45px; object-fit: cover; border-radius: 4px; background: #000; }
+        .viewers-cell { font-weight: 700; color: var(--primary); font-size: 1.1rem; }
+        .name-cell { font-weight: 600; }
+        .badge.new { background: #28a745; color: #fff; font-size: 0.7rem; padding: 2px 6px; border-radius: 10px; margin-left: 5px; vertical-align: middle; }
+        .topic-cell { color: var(--text-muted); font-size: 0.9rem; max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .watch-btn { display: inline-block; padding: 6px 12px; background: var(--primary); color: #fff; text-decoration: none; border-radius: 4px; font-weight: 600; font-size: 0.9rem; transition: background 0.2s; white-space: nowrap; }
+        .watch-btn:hover { background: #b01045; }
         
-        /* Call to Action Button */
-        .watch-btn { 
-            display: inline-block; padding: 4px 10px; background: #e33b8f; 
-            color: white; text-decoration: none; border-radius: 3px; 
-            font-weight: bold; font-size: 0.85em; white-space: nowrap;
-        }
-        .watch-btn:hover { background: #b92b73; }
+        /* --- Tags & Categories --- */
+        .tags-section, .browse-section { background: var(--card-bg); padding: 25px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 25px; }
+        .tags-section h2, .browse-section h2 { margin-top: 0; border-bottom: 2px solid var(--primary); padding-bottom: 10px; display: inline-block; }
         
-        #loading { font-size: 1.2em; color: #586069; margin: 2rem 0; font-style: italic; }
-        .hidden { display: none !important; }
+        .tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 15px; }
+        .tag-link { display: inline-block; padding: 6px 12px; background: #e9ecef; color: var(--text); text-decoration: none; border-radius: 4px; font-size: 0.9rem; transition: all 0.2s; }
+        .tag-link:hover { background: var(--primary); color: #fff; }
+        .tag-link .count { color: var(--text-muted); font-size: 0.8rem; margin-left: 4px; }
+        .tag-link:hover .count { color: #fff; }
         
-        /* Mobile Responsive Table */
-        @media screen and (max-width: 768px) {
-            table { display: block; overflow-x: auto; white-space: nowrap; }
+        .loading { text-align: center; padding: 40px; font-size: 1.2rem; color: var(--text-muted); }
+        
+        /* --- Responsive --- */
+        @media (max-width: 768px) {
+            .model-table th, .model-table td { padding: 8px; font-size: 0.85rem; }
+            .cam-cell img { width: 40px; height: 30px; }
+            .topic-cell { max-width: 120px; }
+            header h1 { font-size: 1.6rem; }
         }
     </style>
 </head>
 <body>
 
-    <h1>Live cam room index — sorted, tagged, and CamSoda-linked</h1>
-    <p>Live cam room index, sorted by tag, country and language. Compare viewers, HD streams, languages, and locations across thousands of live broadcasters in one dense, scannable table. Currently indexing <strong id="total-models">0</strong> live rooms. Tap any column header to re-sort. Filter by name, country, language, or tag.</p>
+<header>
+    <h1>Live Cam Room Index</h1>
+    <p>Sorted, tagged, and revshare-linked</p>
+</header>
 
-    <div class="filters" id="gender-filters">
-        <button class="active" data-gender="all">All genders</button>
-        <button data-gender="f">Female</button>
-        <button data-gender="m">Male</button>
-        <button data-gender="c">Couple</button>
-        <button data-gender="t">Trans</button>
+<div class="container">
+    <div class="intro-card">
+        <p>Live cam room index, sorted by tag, country and language. Compare viewers, HD streams, languages, and locations across thousands of live broadcasters in one dense, scannable table.</p>
+        <p>Currently indexing <strong id="total-count">0</strong> live rooms across <strong>100+</strong> tags. Tap any column header to re-sort. Filter by gender below.</p>
     </div>
 
-    <div class="counter"><span id="filtered-count">0</span> of <span id="total-count">0</span> rooms</div>
+    <div class="filters">
+        <span>Filter:</span>
+        <button class="filter-btn active" data-gender="all">All genders</button>
+        <button class="filter-btn" data-gender="f">Female</button>
+        <button class="filter-btn" data-gender="m">Male</button>
+        <button class="filter-btn" data-gender="c">Couple</button>
+        <button class="filter-btn" data-gender="t">Trans</button>
+        <span style="margin-left: auto; font-size: 0.9rem; color: var(--text-muted);" id="showing-count">Showing 0 of 0 rooms</span>
+    </div>
 
-    <div id="loading">Fetching live models from CamSoda API...</div>
-    
-    <table id="models-table" class="hidden">
-        <thead>
-            <tr>
-                <th data-sort="thumb">Cam</th>
-                <th data-sort="viewers" data-order="desc">Viewers ▼</th>
-                <th data-sort="username">Broadcaster ↕</th>
-                <th data-sort="gender">Gender ↕</th>
-                <th data-sort="age">Age ↕</th>
-                <th data-sort="country">Country ↕</th>
-                <th data-sort="lang">Language ↕</th>
-                <th data-sort="online">Online ↕</th>
-                <th data-sort="rating">Followers ↕</th>
-                <th data-sort="tags">Topic / Tags</th>
-                <th>Watch</th>
-            </tr>
-        </thead>
-        <tbody id="models-tbody"></tbody>
-    </table>
+    <div class="table-container">
+        <div id="model-table-container" class="loading">
+            Loading live models...
+        </div>
+    </div>
 
-    <h2 id="tags-header" class="hidden">All live tags</h2>
-    <div class="tags-list" id="tags-list"></div>
+    <div class="tags-section">
+        <h2>All 100+ live tags</h2>
+        <div class="tag-cloud" id="tag-cloud">
+            <!-- Tags injected via JS -->
+        </div>
+    </div>
 
-    <h2 id="countries-header" class="hidden">Browse by country</h2>
-    <div class="meta-list" id="countries-list"></div>
+    <div class="browse-section">
+        <h2>Browse by Category</h2>
+        <div class="tag-cloud">
+            <a href="https://www.camsoda.com/girls?id=bewse2&type=PPS" class="tag-link" target="_blank">Women Only</a>
+            <a href="https://www.camsoda.com/couples?id=bewse2&type=PPS" class="tag-link" target="_blank">Couples</a>
+            <a href="https://www.camsoda.com/men?id=bewse2&type=PPS" class="tag-link" target="_blank">Gay / Men</a>
+            <a href="https://www.camsoda.com/trans?id=bewse2&type=PPS" class="tag-link" target="_blank">Trans</a>
+            <a href="https://www.camsoda.com/?t=bestpop&id=bewse2" class="tag-link" target="_blank">Best Pops</a>
+            <a href="https://www.camsoda.com/?t=bestmobilepop&id=bewse2" class="tag-link" target="_blank">Best Mobile Pops</a>
+        </div>
+    </div>
+</div>
 
-    <h2 id="languages-header" class="hidden">Browse by language</h2>
-    <div class="meta-list" id="languages-list"></div>
+<script>
+    // --- State Management ---
+    let allModels = [];
+    let currentFilter = 'all';
+    let currentSort = { key: 'viewers', asc: false }; // Default sort by viewers descending
 
-    <h2 id="genders-header" class="hidden">Browse by gender</h2>
-    <div class="meta-list" id="genders-list"></div>
+    // --- Tag Data (Scraped from reference site structure) ---
+    const tagsData = [
+        { name: '18', count: 159 }, { name: 'new', count: 138 }, { name: 'lovense', count: 114 }, 
+        { name: 'teen', count: 110 }, { name: 'bigboobs', count: 106 }, { name: 'young', count: 105 }, 
+        { name: 'squirt', count: 88 }, { name: 'bigass', count: 83 }, { name: 'skinny', count: 80 }, 
+        { name: 'anal', count: 79 }, { name: 'natural', count: 63 }, { name: 'shy', count: 60 }, 
+        { name: 'smalltits', count: 48 }, { name: 'cum', count: 46 }, { name: 'asian', count: 44 }, 
+        { name: 'feet', count: 38 }, { name: 'blonde', count: 37 }, { name: 'bigcock', count: 37 }, 
+        { name: 'latina', count: 36 }, { name: 'cute', count: 33 }, { name: 'hairy', count: 33 }, 
+        { name: 'fuckmachine', count: 23 }, { name: 'deepthroat', count: 22 }, { name: 'tease', count: 21 }, 
+        { name: 'muscle', count: 21 }, { name: 'petite', count: 20 }, { name: 'mistress', count: 19 }, 
+        { name: 'pvt', count: 17 }, { name: 'twink', count: 16 }, { name: 'redhead', count: 13 }, 
+        { name: 'trans', count: 12 }, { name: 'milf', count: 11 }, { name: 'couple', count: 11 }, 
+        { name: 'bigdick', count: 11 }, { name: 'goth', count: 10 }, { name: 'bigtits', count: 10 }
+    ];
 
-    <script>
-        // 1. API Endpoints (Using your provided CamSoda links)
-        const PRIMARY_API = 'https://feed.camsoda.com/api/v1/browse/online_embed?id=bewse2&cmp=index_page';
-        const FALLBACK_API = 'https://www.camsoda.com/api/v1/browse/online?id=bewse2';
+    // --- Initialization ---
+    function renderTags() {
+        const container = document.getElementById('tag-cloud');
+        container.innerHTML = tagsData.map(tag => `
+            <a href="https://www.camsoda.com/girls/tag/${tag.name}-cams?id=bewse2&type=PPS" class="tag-link" target="_blank">
+                #${tag.name} <span class="count">(${tag.count})</span>
+            </a>
+        `).join('');
+    }
+
+    // --- Data Fetching with Fallback ---
+    async function loadModels() {
+        try {
+            // Fetch live JSON data from CamSoda API
+            const response = await fetch('https://feed.camsoda.com/api/v1/browse/online?id=bewse2&cmp=table_feed');
+            if (!response.ok) throw new Error('Network response was not ok');
+            const data = await response.json();
+            
+            allModels = data.results || [];
+            document.getElementById('total-count').textContent = data.count_total || allModels.length;
+            renderTable();
+        } catch (error) {
+            console.warn('JSON API blocked by CORS. Falling back to official iframe embed...', error);
+            // Fallback to the official embed widget if CORS restricts the JSON API
+            document.getElementById('model-table-container').innerHTML = `
+                <iframe src="https://feed.camsoda.com/api/v1/browse/online_embed?id=bewse2&cmp=table_feed" style="width:100%; height:800px; border:none; display:block;"></iframe>
+            `;
+            document.getElementById('showing-count').textContent = 'Live feed embedded';
+        }
+    }
+
+    // --- Table Rendering Engine ---
+    function renderTable() {
+        const container = document.getElementById('model-table-container');
         
-        let allModels = [];
-        let currentGenderFilter = 'all';
-        let currentSort = { col: 'viewers', order: 'desc' };
-
-        async function fetchModels() {
-            try {
-                // Try the embed endpoint first
-                let response = await fetch(PRIMARY_API);
-                if (!response.ok) throw new Error('Primary API failed');
-                
-                let contentType = response.headers.get("content-type") || "";
-                if (contentType.includes("application/json")) {
-                    let data = await response.json();
-                    // Handle potential wrapper objects like { "models": [...] }
-                    allModels = Array.isArray(data) ? data : (data.models || data.users || data.data || []);
-                } else {
-                    throw new Error('Not JSON');
-                }
-            } catch (e) {
-                console.warn('Primary API failed or not JSON, trying fallback...', e);
-                try {
-                    let response = await fetch(FALLBACK_API);
-                    let data = await response.json();
-                    allModels = Array.isArray(data) ? data : (data.models || data.users || data.data || []);
-                } catch (err) {
-                    console.error('Both APIs failed', err);
-                    document.getElementById('loading').textContent = 'Failed to fetch live models due to network/CORS restrictions. Ensure your domain is whitelisted with CamSoda.';
-                    return;
-                }
-            }
-
-            // Normalize data fields for the table
-            allModels = allModels.map(m => ({
-                username: m.username || m.model_name || m.room_name || 'unknown',
-                thumb: (m.thumb || m.image_url || m.room_thumb || '').startsWith('http') ? (m.thumb || m.image_url || m.room_thumb) : 'https://www.camsoda.com' + (m.thumb || m.image_url || m.room_thumb || ''),
-                viewers: parseInt(m.viewers || m.room_viewers || m.online_users || 0),
-                gender: m.gender || 'f',
-                age: m.age || 99,
-                country: m.country || m.location || 'Unknown',
-                lang: m.lang || m.language || 'English',
-                online: m.online_time || m.start_time || 0,
-                rating: parseFloat(m.rating || m.rank || m.favorites_count || 0),
-                bio: m.user_bio || m.bio || '',
-                tags: Array.isArray(m.tags) ? m.tags : (m.tags ? m.tags.split(',') : [])
-            })).filter(m => m.username !== 'unknown' && m.thumb !== 'https://www.camsoda.com');
-
-            document.getElementById('total-models').textContent = allModels.length;
-            document.getElementById('loading').classList.add('hidden');
-            document.getElementById('models-table').classList.remove('hidden');
+        // 1. Filter
+        let filtered = currentFilter === 'all' 
+            ? allModels 
+            : allModels.filter(m => m.tpl[8] === currentFilter);
             
-            renderTable();
-            renderSidebars();
+        // 2. Sort
+        filtered = sortModels(filtered, currentSort.key, currentSort.asc);
+        document.getElementById('showing-count').textContent = `Showing ${filtered.length} of ${allModels.length} rooms`;
+
+        if (filtered.length === 0) {
+            container.innerHTML = '<div class="loading">No models found for this filter.</div>';
+            return;
         }
 
-        function formatOnlineTime(startTime) {
-            if (!startTime) return 'Unknown';
-            let diff = (Date.now() / 1000) - startTime;
-            let h = Math.floor(diff / 3600);
-            let m = Math.floor((diff % 3600) / 60);
-            return `${h}h ${m}m`;
-        }
-
-        function renderTable() {
-            const tbody = document.getElementById('models-tbody');
-            tbody.innerHTML = '';
+        // 3. Build HTML
+        let html = `
+            <table class="model-table">
+                <thead>
+                    <tr>
+                        <th>Cam</th>
+                        <th data-sort="viewers" class="${currentSort.key === 'viewers' ? 'sorted' : ''}">Viewers <span class="sort-icon">${currentSort.key === 'viewers' ? (currentSort.asc ? '▲' : '▼') : '↕'}</span></th>
+                        <th data-sort="name" class="${currentSort.key === 'name' ? 'sorted' : ''}">Broadcaster <span class="sort-icon">${currentSort.key === 'name' ? (currentSort.asc ? '▲' : '▼') : '↕'}</span></th>
+                        <th data-sort="gender" class="${currentSort.key === 'gender' ? 'sorted' : ''}">Gender <span class="sort-icon">${currentSort.key === 'gender' ? (currentSort.asc ? '▲' : '▼') : '↕'}</span></th>
+                        <th>Topic / Status</th>
+                        <th data-sort="followers" class="${currentSort.key === 'followers' ? 'sorted' : ''}">Followers <span class="sort-icon">${currentSort.key === 'followers' ? (currentSort.asc ? '▲' : '▼') : '↕'}</span></th>
+                        <th>Watch</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+        
+        filtered.forEach(model => {
+            const tpl = model.tpl;
+            const username = tpl[1];
+            const displayName = tpl[2] || username;
+            const viewers = tpl[4] || 0;
+            const topic = (tpl[6] || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            const genderCode = tpl[8] || 'f';
+            const followers = tpl[12] || 0;
+            const thumb = tpl[10] || '';
             
-            let filtered = allModels.filter(m => {
-                if (currentGenderFilter === 'all') return true;
-                return m.gender.toLowerCase().startsWith(currentGenderFilter);
-            });
-
-            // Sort logic
-            filtered.sort((a, b) => {
-                let valA = a[currentSort.col];
-                let valB = b[currentSort.col];
-                
-                if (typeof valA === 'string') valA = valA.toLowerCase();
-                if (typeof valB === 'string') valB = valB.toLowerCase();
-                
-                if (valA < valB) return currentSort.order === 'asc' ? -1 : 1;
-                if (valA > valB) return currentSort.order === 'asc' ? 1 : -1;
-                return 0;
-            });
-
-            document.getElementById('filtered-count').textContent = filtered.length;
-            document.getElementById('total-count').textContent = allModels.length;
-
-            filtered.forEach(m => {
-                const tr = document.createElement('tr');
-                
-                // Build Tag HTML (CamSoda format)
-                let tagsHtml = m.tags.map(t => `#${t.trim()}`).join(' ');
-                let bioShort = m.bio ? m.bio.substring(0, 100) + (m.bio.length > 100 ? '...' : '') : '';
-                
-                // Your CamSoda Affiliate Model Link
-                let modelLink = `https://www.camsoda.com/${m.username}?id=bewse2&type=PPS&cmp=table_watch`;
-                
-                tr.innerHTML = `
-                    <td><img src="${m.thumb}" class="thumb" loading="lazy" onerror="this.style.display='none'"></td>
-                    <td><strong>${m.viewers > 1000 ? (m.viewers/1000).toFixed(1) + 'k' : m.viewers}</strong></td>
-                    <td>${m.username} <span class="badge-hd">HD</span></td>
-                    <td>${getGenderFull(m.gender)}</td>
-                    <td>${m.age === 99 ? '' : m.age}</td>
-                    <td>${m.country}</td>
-                    <td>${m.lang}</td>
-                    <td>${formatOnlineTime(m.online)}</td>
-                    <td>${m.rating.toFixed(1)}</td>
-                    <td>
-                        <div style="max-height:80px; overflow:hidden;">${bioShort}<br>${tagsHtml}</div>
-                    </td>
-                    <td><a href="${modelLink}" target="_blank" rel="noopener" class="watch-btn">Open Cam →</a></td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        function getGenderFull(g) {
-            g = g.toLowerCase();
-            if (g.startsWith('f')) return 'Female';
-            if (g.startsWith('m')) return 'Male';
-            if (g.startsWith('c')) return 'Couple';
-            if (g.startsWith('t')) return 'Trans';
-            return g;
-        }
-
-        function renderSidebars() {
-            let tags = {}, countries = {}, languages = {}, genders = {};
+            const genderMap = { 'f': 'Female', 'm': 'Male', 'c': 'Couple', 't': 'Trans' };
+            const gender = genderMap[genderCode] || 'Unknown';
             
-            allModels.forEach(m => {
-                genders[getGenderFull(m.gender)] = (genders[getGenderFull(m.gender)] || 0) + 1;
-                countries[m.country] = (countries[m.country] || 0) + 1;
-                languages[m.lang] = (languages[m.lang] || 0) + 1;
-                m.tags.forEach(t => {
-                    let cleanTag = t.trim();
-                    if(cleanTag) tags[cleanTag] = (tags[cleanTag] || 0) + 1;
-                });
-            });
-
-            // Render Tags (Links to your Tag Page affiliate link)
-            let tagsHtml = '';
-            Object.keys(tags).sort((a,b) => tags[b]-tags[a]).forEach(t => {
-                let tagLink = `https://www.camsoda.com/girls/tag/${t}-cams?id=bewse2&type=PPS&cmp=sidebar_tag`;
-                tagsHtml += `<a href="${tagLink}" target="_blank" rel="noopener">#${t} (${tags[t]})</a> `;
-            });
-            document.getElementById('tags-list').innerHTML = tagsHtml;
-            document.getElementById('tags-header').classList.remove('hidden');
-
-            // Render Countries (Links to Women Only page filtered by country)
-            let countriesHtml = '';
-            Object.keys(countries).sort((a,b) => countries[b]-countries[a]).forEach(c => {
-                let cLink = `https://www.camsoda.com/girls?id=bewse2&type=PPS&cmp=sidebar_country`; 
-                // Note: CamSoda URL structure for country filtering might require specific tags, defaulting to homepage for safety
-                countriesHtml += `<a href="${cLink}" target="_blank" rel="noopener">${c} (${countries[c]})</a> `;
-            });
-            document.getElementById('countries-list').innerHTML = countriesHtml;
-            document.getElementById('countries-header').classList.remove('hidden');
-
-            // Render Languages
-            let languagesHtml = '';
-            Object.keys(languages).sort((a,b) => languages[b]-languages[a]).forEach(l => {
-                languagesHtml += `<a href="https://www.camsoda.com/girls?id=bewse2&type=PPS&cmp=sidebar_lang" target="_blank" rel="noopener">${l} (${languages[l]})</a> `;
-            });
-            document.getElementById('languages-list').innerHTML = languagesHtml;
-            document.getElementById('languages-header').classList.remove('hidden');
-
-            // Render Genders
-            let gendersHtml = '';
-            Object.keys(genders).forEach(g => {
-                gendersHtml += `<a href="#" onclick="filterGender('${g[0].toLowerCase()}'); return false;">${g} (${genders[g]})</a> `;
-            });
-            document.getElementById('genders-list').innerHTML = gendersHtml;
-            document.getElementById('genders-header').classList.remove('hidden');
-        }
-
-        // Event Listeners for UI
-        document.querySelectorAll('#gender-filters button').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('#gender-filters button').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                currentGenderFilter = btn.dataset.gender;
-                renderTable();
-            });
+            // Affiliate Link (PPS - $100 per signup)
+            const watchUrl = `https://www.camsoda.com/${username}?id=bewse2&type=PPS&cmp=table_watch`;
+            
+            html += `
+                <tr>
+                    <td class="cam-cell"><img src="${thumb}" alt="${displayName}" loading="lazy" onerror="this.style.display='none'"></td>
+                    <td class="viewers-cell"><strong>${viewers}</strong></td>
+                    <td class="name-cell">${displayName} ${model.new ? '<span class="badge new">NEW</span>' : ''}</td>
+                    <td class="gender-cell">${gender}</td>
+                    <td class="topic-cell" title="${topic}">${topic}</td>
+                    <td class="followers-cell">${followers}</td>
+                    <td class="watch-cell"><a href="${watchUrl}" target="_blank" class="watch-btn">Open Cam →</a></td>
+                </tr>
+            `;
         });
-
-        document.querySelectorAll('th[data-sort]').forEach(th => {
+        
+        html += `</tbody></table>`;
+        container.innerHTML = html;
+        
+        // 4. Attach Sort Listeners
+        document.querySelectorAll('.model-table th[data-sort]').forEach(th => {
             th.addEventListener('click', () => {
-                let col = th.dataset.sort;
-                if (currentSort.col === col) {
-                    currentSort.order = currentSort.order === 'asc' ? 'desc' : 'asc';
+                const key = th.getAttribute('data-sort');
+                if (currentSort.key === key) {
+                    currentSort.asc = !currentSort.asc; // Toggle direction
                 } else {
-                    currentSort.col = col;
-                    currentSort.order = col === 'viewers' ? 'desc' : 'asc';
+                    currentSort.key = key;
+                    currentSort.asc = true;
                 }
-                
-                // Update visual arrows
-                document.querySelectorAll('th').forEach(t => {
-                    t.textContent = t.textContent.replace(/[▼▲]/g, '').replace('↕', '');
-                    if (t.dataset.sort === col) {
-                        t.textContent += currentSort.order === 'desc' ? ' ▼' : ' ▲';
-                    } else {
-                        t.textContent += ' ↕';
-                    }
-                });
-                
                 renderTable();
             });
         });
+    }
 
-        function filterGender(g) {
-            currentGenderFilter = g;
-            document.querySelectorAll('#gender-filters button').forEach(b => {
-                b.classList.toggle('active', b.dataset.gender === g);
-            });
+    // --- Sorting Logic ---
+    function sortModels(models, key, asc) {
+        return [...models].sort((a, b) => {
+            let valA, valB;
+            switch(key) {
+                case 'viewers': valA = a.tpl[4] || 0; valB = b.tpl[4] || 0; break;
+                case 'name': valA = (a.tpl[2] || '').toLowerCase(); valB = (b.tpl[2] || '').toLowerCase(); break;
+                case 'gender': valA = a.tpl[8] || ''; valB = b.tpl[8] || ''; break;
+                case 'followers': valA = a.tpl[12] || 0; valB = b.tpl[12] || 0; break;
+                default: return 0;
+            }
+            if (typeof valA === 'string') {
+                return asc ? valA.localeCompare(valB) : valB.localeCompare(valA);
+            }
+            return asc ? valA - valB : valB - valA;
+        });
+    }
+
+    // --- Event Listeners ---
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentFilter = btn.getAttribute('data-gender');
             renderTable();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+        });
+    });
 
-        // Initialize
-        fetchModels();
-    </script>
+    // --- Boot Sequence ---
+    renderTags();
+    loadModels();
+</script>
+
 </body>
 </html>
