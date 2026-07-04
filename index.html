@@ -3,295 +3,339 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Cam Room Index — CamSoda Affiliate</title>
+    <meta name="description" content="Live cam room index, sorted by tag, country and language. Compare viewers, HD streams, and locations across thousands of CamSoda broadcasters.">
     
-    <!-- SEO Meta Tags -->
-    <title>CamSoda AI & Live Cams | Meet Your Virtual Companion</title>
-    <meta name="description" content="Discover the ultimate interactive experience with CamSoda AI Girlfriend and live cam entertainment. Connect with virtual companions and live models today.">
-    <meta name="keywords" content="AI girlfriend, CamSoda AI, live cam site, virtual companion, interactive chat, AI chatbot, live entertainment">
-    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
-    <link rel="canonical" href="https://www.yourdomain.com/"> <!-- Replace with your actual domain -->
-    
-    <!-- Open Graph / Social Media SEO -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.yourdomain.com/">
-    <meta property="og:title" content="CamSoda AI & Live Cams | Meet Your Virtual Companion">
-    <meta property="og:description" content="Experience the future of interaction with CamSoda AI Girlfriend and live cam entertainment.">
-    <meta property="og:image" content="https://promos.camsoda.com/promos/ai-gf/banners/ai_900x250_01.mp4">
-
-    <!-- Twitter Card -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="CamSoda AI & Live Cams | Meet Your Virtual Companion">
-    <meta property="twitter:description" content="Experience the future of interaction with CamSoda AI Girlfriend and live cam entertainment.">
-    
-    <!-- JSON-LD Structured Data for Search Engines -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "CamSoda AI & Live Entertainment",
-      "url": "https://www.yourdomain.com/",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://www.yourdomain.com/search?q={search_term_string}",
-        "query-input": "required name=search_term_string"
-      }
-    }
-    </script>
-
     <style>
-        /* CSS Variables for easy theming */
-        :root {
-            --primary-color: #ff2a6d;
-            --secondary-color: #05d9e8;
-            --bg-dark: #0d0221;
-            --bg-light: #1a0b36;
-            --text-light: #ffffff;
-            --text-muted: #d1d1e0;
+        /* Minimalist, dense "GitHub Pages" style CSS */
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; 
+            line-height: 1.5; margin: 2rem; color: #24292e; max-width: 1400px; margin-left: auto; margin-right: auto;
         }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-dark);
-            color: var(--text-light);
-            line-height: 1.6;
-        }
-
-        header {
-            background: linear-gradient(135deg, var(--bg-light), var(--bg-dark));
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid var(--primary-color);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .logo { font-size: 1.5rem; font-weight: bold; color: var(--primary-color); }
+        h1, h2 { border-bottom: 1px solid #eaecef; padding-bottom: .3em; }
+        h1 { font-size: 2em; }
+        h2 { font-size: 1.5em; margin-top: 2rem; }
+        p { margin-bottom: 1rem; }
         
-        nav a {
-            color: var(--text-light);
-            text-decoration: none;
-            margin-left: 1.5rem;
-            transition: color 0.3s;
-            font-weight: 500;
+        .filters { margin: 1rem 0; }
+        .filters button { 
+            padding: 5px 12px; margin-right: 5px; cursor: pointer; 
+            background: #f6f8fa; border: 1px solid #d1d5da; border-radius: 3px; font-weight: 600;
         }
-        nav a:hover { color: var(--secondary-color); }
-
-        .hero {
-            text-align: center;
-            padding: 5rem 2rem;
-            background: radial-gradient(circle, var(--bg-light) 0%, var(--bg-dark) 100%);
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero p {
-            font-size: 1.25rem;
-            color: var(--text-muted);
-            max-width: 800px;
-            margin: 0 auto 2.5rem auto;
-        }
-
-        .cta-button {
-            display: inline-block;
-            padding: 1rem 2.5rem;
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: var(--text-light);
-            background: linear-gradient(45deg, var(--primary-color), #d91656);
-            border: none;
-            border-radius: 50px;
-            text-decoration: none;
-            transition: transform 0.3s, box-shadow 0.3s;
-            box-shadow: 0 4px 15px rgba(255, 42, 109, 0.4);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(255, 42, 109, 0.6);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
-            color: var(--secondary-color);
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .feature-card {
-            background: var(--bg-light);
-            padding: 2rem;
-            border-radius: 15px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: transform 0.3s;
-        }
-
-        .feature-card:hover { transform: translateY(-10px); border-color: var(--primary-color); }
-        .feature-card h3 { color: var(--primary-color); margin-bottom: 1rem; font-size: 1.5rem; }
-
-        .banner-gallery {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-            justify-content: center;
-            margin-top: 2rem;
-        }
-
-        .banner-item {
-            background: #000;
-            padding: 5px;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-            transition: transform 0.3s;
-        }
+        .filters button.active { background: #0366d6; color: white; border-color: #0366d6; }
         
-        .banner-item:hover { transform: scale(1.05); }
-
-        .banner-item img {
-            display: block;
-            max-width: 100%;
-            height: auto;
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2rem; }
-            .hero p { font-size: 1rem; }
-            header { flex-direction: column; gap: 1rem; }
-            nav a { margin: 0 0.5rem; }
-        }
-
-        footer {
-            text-align: center;
-            padding: 2rem;
-            background: var(--bg-light);
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
+        .counter { font-weight: bold; margin-bottom: 1rem; color: #586069; }
         
-        .disclaimer { font-size: 0.8rem; color: #888; margin-top: 1rem; }
+        /* Dense Data Table */
+        table { width: 100%; border-collapse: collapse; margin-bottom: 2rem; font-size: 0.85em; }
+        th, td { border: 1px solid #dfe2e5; padding: 6px 10px; text-align: left; vertical-align: top; }
+        th { background-color: #f6f8fa; cursor: pointer; user-select: none; white-space: nowrap; }
+        th:hover { background-color: #eaecef; }
         
-        /* Adjusting the fixed embed widget for mobile so it doesn't block content */
-        @media (max-width: 768px) {
-            #camsoda-embed {
-                width: 200px !important;
-                bottom: 10px !important;
-                right: 10px !important;
-            }
+        tr:nth-child(even) { background-color: #f6f8fa; }
+        tr:hover { background-color: #f1f8ff; }
+        
+        .thumb { width: 100px; height: 75px; object-fit: cover; border-radius: 3px; display: block; }
+        .badge-hd { background: #28a745; color: white; padding: 1px 4px; font-size: 0.7em; border-radius: 3px; margin-left: 4px; }
+        
+        /* Taxonomy Lists (Tags, Countries, etc.) */
+        .tags-list, .meta-list { margin-bottom: 2rem; line-height: 2; }
+        .tags-list a, .meta-list a { 
+            display: inline-block; margin: 2px 4px; padding: 3px 8px; 
+            background: #f1f8ff; border: 1px solid #c8e1ff; border-radius: 15px; 
+            text-decoration: none; color: #0366d6; font-size: 0.85em; 
+        }
+        .tags-list a:hover, .meta-list a:hover { background: #0366d6; color: white; }
+        
+        /* Call to Action Button */
+        .watch-btn { 
+            display: inline-block; padding: 4px 10px; background: #e33b8f; 
+            color: white; text-decoration: none; border-radius: 3px; 
+            font-weight: bold; font-size: 0.85em; white-space: nowrap;
+        }
+        .watch-btn:hover { background: #b92b73; }
+        
+        #loading { font-size: 1.2em; color: #586069; margin: 2rem 0; font-style: italic; }
+        .hidden { display: none !important; }
+        
+        /* Mobile Responsive Table */
+        @media screen and (max-width: 768px) {
+            table { display: block; overflow-x: auto; white-space: nowrap; }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo">CamSoda AI & Live</div>
-        <nav>
-            <a href="#ai-girlfriend">AI Girlfriend</a>
-            <a href="#live-cams">Live Cams</a>
-            <a href="#gallery">Gallery</a>
-        </nav>
-    </header>
+    <h1>Live cam room index — sorted, tagged, and CamSoda-linked</h1>
+    <p>Live cam room index, sorted by tag, country and language. Compare viewers, HD streams, languages, and locations across thousands of live broadcasters in one dense, scannable table. Currently indexing <strong id="total-models">0</strong> live rooms. Tap any column header to re-sort. Filter by name, country, language, or tag.</p>
 
-    <main>
-        <!-- Hero Section -->
-        <section class="hero" id="ai-girlfriend">
-            <h1>Experience the Future of AI Girlfriends & Live Cams</h1>
-            <p>Meet your perfect virtual companion with CamSoda AI. Engage in realistic, interactive conversations and explore a world of live entertainment.</p>
-            <!-- Primary PPS Link for AI -->
-            <a href="https://www.camsoda.ai/?id=bewse2&type=PPS&cmp=hero_cta" class="cta-button" target="_blank" rel="noopener noreferrer">Meet Your AI Girlfriend Now</a>
-        </section>
+    <div class="filters" id="gender-filters">
+        <button class="active" data-gender="all">All genders</button>
+        <button data-gender="f">Female</button>
+        <button data-gender="m">Male</button>
+        <button data-gender="c">Couple</button>
+        <button data-gender="t">Trans</button>
+    </div>
 
-        <!-- Features Section -->
-        <section class="container">
-            <h2 class="section-title">Why Choose CamSoda?</h2>
-            <div class="features-grid">
-                <article class="feature-card">
-                    <h3>Advanced AI Companions</h3>
-                    <p>Our AI girlfriends are designed to learn and adapt to your preferences, providing a deeply personalized and interactive chat experience.</p>
-                </article>
-                <article class="feature-card">
-                    <h3>Live Cam Entertainment</h3>
-                    <p>Connect with thousands of live models from around the world. Enjoy high-definition streams, interactive toys, and private shows.</p>
-                </article>
-                <article class="feature-card">
-                    <h3>Secure & Private</h3>
-                    <p>Your privacy is our priority. Enjoy discreet billing and a secure platform to explore your fantasies safely.</p>
-                </article>
-            </div>
-        </section>
+    <div class="counter"><span id="filtered-count">0</span> of <span id="total-count">0</span> rooms</div>
 
-        <!-- Live Cams Section -->
-        <section class="container" id="live-cams" style="background: var(--bg-light); border-radius: 20px;">
-            <h2 class="section-title">Live Models Online Now</h2>
-            <p style="text-align: center; margin-bottom: 2rem; color: var(--text-muted);">Join the excitement. Thousands of models are live right now, waiting to connect with you.</p>
-            <div style="text-align: center;">
-                <!-- Primary PPS Link for Main Site -->
-                <a href="https://www.camsoda.com/?id=bewse2&type=PPS&cmp=live_cams_section" class="cta-button" target="_blank" rel="noopener noreferrer">Explore Live Cams</a>
-            </div>
-        </section>
+    <div id="loading">Fetching live models from CamSoda API...</div>
+    
+    <table id="models-table" class="hidden">
+        <thead>
+            <tr>
+                <th data-sort="thumb">Cam</th>
+                <th data-sort="viewers" data-order="desc">Viewers ▼</th>
+                <th data-sort="username">Broadcaster ↕</th>
+                <th data-sort="gender">Gender ↕</th>
+                <th data-sort="age">Age ↕</th>
+                <th data-sort="country">Country ↕</th>
+                <th data-sort="lang">Language ↕</th>
+                <th data-sort="online">Online ↕</th>
+                <th data-sort="rating">Followers ↕</th>
+                <th data-sort="tags">Topic / Tags</th>
+                <th>Watch</th>
+            </tr>
+        </thead>
+        <tbody id="models-tbody"></tbody>
+    </table>
 
-        <!-- Banner Gallery Section -->
-        <section class="container" id="gallery">
-            <h2 class="section-title">Promotional Gallery</h2>
-            <p style="text-align: center; margin-bottom: 2rem; color: var(--text-muted);">Check out the latest AI Girlfriend promotions and creative banners.</p>
+    <h2 id="tags-header" class="hidden">All live tags</h2>
+    <div class="tags-list" id="tags-list"></div>
+
+    <h2 id="countries-header" class="hidden">Browse by country</h2>
+    <div class="meta-list" id="countries-list"></div>
+
+    <h2 id="languages-header" class="hidden">Browse by language</h2>
+    <div class="meta-list" id="languages-list"></div>
+
+    <h2 id="genders-header" class="hidden">Browse by gender</h2>
+    <div class="meta-list" id="genders-list"></div>
+
+    <script>
+        // 1. API Endpoints (Using your provided CamSoda links)
+        const PRIMARY_API = 'https://feed.camsoda.com/api/v1/browse/online_embed?id=bewse2&cmp=index_page';
+        const FALLBACK_API = 'https://www.camsoda.com/api/v1/browse/online?id=bewse2';
+        
+        let allModels = [];
+        let currentGenderFilter = 'all';
+        let currentSort = { col: 'viewers', order: 'desc' };
+
+        async function fetchModels() {
+            try {
+                // Try the embed endpoint first
+                let response = await fetch(PRIMARY_API);
+                if (!response.ok) throw new Error('Primary API failed');
+                
+                let contentType = response.headers.get("content-type") || "";
+                if (contentType.includes("application/json")) {
+                    let data = await response.json();
+                    // Handle potential wrapper objects like { "models": [...] }
+                    allModels = Array.isArray(data) ? data : (data.models || data.users || data.data || []);
+                } else {
+                    throw new Error('Not JSON');
+                }
+            } catch (e) {
+                console.warn('Primary API failed or not JSON, trying fallback...', e);
+                try {
+                    let response = await fetch(FALLBACK_API);
+                    let data = await response.json();
+                    allModels = Array.isArray(data) ? data : (data.models || data.users || data.data || []);
+                } catch (err) {
+                    console.error('Both APIs failed', err);
+                    document.getElementById('loading').textContent = 'Failed to fetch live models due to network/CORS restrictions. Ensure your domain is whitelisted with CamSoda.';
+                    return;
+                }
+            }
+
+            // Normalize data fields for the table
+            allModels = allModels.map(m => ({
+                username: m.username || m.model_name || m.room_name || 'unknown',
+                thumb: (m.thumb || m.image_url || m.room_thumb || '').startsWith('http') ? (m.thumb || m.image_url || m.room_thumb) : 'https://www.camsoda.com' + (m.thumb || m.image_url || m.room_thumb || ''),
+                viewers: parseInt(m.viewers || m.room_viewers || m.online_users || 0),
+                gender: m.gender || 'f',
+                age: m.age || 99,
+                country: m.country || m.location || 'Unknown',
+                lang: m.lang || m.language || 'English',
+                online: m.online_time || m.start_time || 0,
+                rating: parseFloat(m.rating || m.rank || m.favorites_count || 0),
+                bio: m.user_bio || m.bio || '',
+                tags: Array.isArray(m.tags) ? m.tags : (m.tags ? m.tags.split(',') : [])
+            })).filter(m => m.username !== 'unknown' && m.thumb !== 'https://www.camsoda.com');
+
+            document.getElementById('total-models').textContent = allModels.length;
+            document.getElementById('loading').classList.add('hidden');
+            document.getElementById('models-table').classList.remove('hidden');
             
-            <h3 style="text-align:center; color: var(--primary-color); margin-bottom:1rem;">300x250 Banners</h3>
-            <div class="banner-gallery">
-                <!-- Sample of 300x250 banners with tracking parameters -->
-                <div class="banner-item"><a href="https://www.camsoda.ai/?id=bewse2&ad_id=ai_300x250_01&cmp=gallery" target="_blank" rel="noopener"><img src="https://promos.camsoda.com/promos/ai-gf/banners/ai_300x250_01.mp4" alt="CamSoda AI Promo 1" loading="lazy"></a></div>
-                <div class="banner-item"><a href="https://www.camsoda.ai/?id=bewse2&ad_id=ai_300x250_02&cmp=gallery" target="_blank" rel="noopener"><img src="https://promos.camsoda.com/promos/ai-gf/banners/ai_300x250_02.mp4" alt="CamSoda AI Promo 2" loading="lazy"></a></div>
-                <div class="banner-item"><a href="https://www.camsoda.ai/?id=bewse2&ad_id=ai_300x250_03&cmp=gallery" target="_blank" rel="noopener"><img src="https://promos.camsoda.com/promos/ai-gf/banners/ai_300x250_03.mp4" alt="CamSoda AI Promo 3" loading="lazy"></a></div>
-            </div>
+            renderTable();
+            renderSidebars();
+        }
 
-            <h3 style="text-align:center; color: var(--primary-color); margin:3rem 0 1rem;">900x250 Wide Banners</h3>
-            <div class="banner-gallery">
-                <div class="banner-item"><a href="https://www.camsoda.ai/?id=bewse2&ad_id=ai_900x250_01&cmp=gallery" target="_blank" rel="noopener"><img src="https://promos.camsoda.com/promos/ai-gf/banners/ai_900x250_01.mp4" alt="CamSoda AI Wide Promo 1" loading="lazy"></a></div>
-                <div class="banner-item"><a href="https://www.camsoda.ai/?id=bewse2&ad_id=ai_900x250_02&cmp=gallery" target="_blank" rel="noopener"><img src="https://promos.camsoda.com/promos/ai-gf/banners/ai_900x250_02.mp4" alt="CamSoda AI Wide Promo 2" loading="lazy"></a></div>
-            </div>
+        function formatOnlineTime(startTime) {
+            if (!startTime) return 'Unknown';
+            let diff = (Date.now() / 1000) - startTime;
+            let h = Math.floor(diff / 3600);
+            let m = Math.floor((diff % 3600) / 60);
+            return `${h}h ${m}m`;
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('models-tbody');
+            tbody.innerHTML = '';
             
-            <!-- 
-                NOTE TO WEBMASTER: 
-                You have 25+ variations for 300x250, 20 for 900x250, etc. 
-                To keep page load speed fast (which is crucial for SEO), only display 3-5 banners at a time. 
-                You can easily copy/paste the rest of your provided banner codes into these .banner-gallery divs.
-            -->
-        </section>
-    </main>
+            let filtered = allModels.filter(m => {
+                if (currentGenderFilter === 'all') return true;
+                return m.gender.toLowerCase().startsWith(currentGenderFilter);
+            });
 
-    <footer>
-        <p>&copy; 2026 CamSoda AI & Live Entertainment. All Rights Reserved.</p>
-        <p class="disclaimer">You must be at least 18 years old to access this website. All models are 18 or older.</p>
-    </footer>
+            // Sort logic
+            filtered.sort((a, b) => {
+                let valA = a[currentSort.col];
+                let valB = b[currentSort.col];
+                
+                if (typeof valA === 'string') valA = valA.toLowerCase();
+                if (typeof valB === 'string') valB = valB.toLowerCase();
+                
+                if (valA < valB) return currentSort.order === 'asc' ? -1 : 1;
+                if (valA > valB) return currentSort.order === 'asc' ? 1 : -1;
+                return 0;
+            });
 
-    <!-- Persistent Floating Embed Widget for Continuous Conversions -->
-    <style>#camsoda-embed{position:fixed;bottom:20px;right:20px;z-index:9999;max-width:100%;}#camsoda-embed > div{width:100%;padding-top:75%;overflow:hidden;}#camsoda-embed > div > div{position:absolute;top:0;right:0;left:0;bottom:0;}#camsoda-embed iframe{width:100%;height:100%;}@media screen and (min-width:410px){#camsoda-embed iframe{border-radius:5px;}}#camsoda-embed > div > div > a{position:absolute;top:3px;right:6px;display:inline-block;content: "d7";color:#FFF;font-size:30px;line-height:30px;font-family:arial;text-shadow:#000 0px 1px 1px;text-decoration:none;}</style>
-    <div id="camsoda-embed" style="width:300px;"><div><div><a href="javascript:void(0)" onclick="document.getElementById('camsoda-embed').remove()">&times;</a><iframe src="https://promos.camsoda.com/embed/?id=bewse2&cmp=floating_widget&gender=f" frameBorder="0" loading="lazy"></iframe></div></div></div>
+            document.getElementById('filtered-count').textContent = filtered.length;
+            document.getElementById('total-count').textContent = allModels.length;
 
+            filtered.forEach(m => {
+                const tr = document.createElement('tr');
+                
+                // Build Tag HTML (CamSoda format)
+                let tagsHtml = m.tags.map(t => `#${t.trim()}`).join(' ');
+                let bioShort = m.bio ? m.bio.substring(0, 100) + (m.bio.length > 100 ? '...' : '') : '';
+                
+                // Your CamSoda Affiliate Model Link
+                let modelLink = `https://www.camsoda.com/${m.username}?id=bewse2&type=PPS&cmp=table_watch`;
+                
+                tr.innerHTML = `
+                    <td><img src="${m.thumb}" class="thumb" loading="lazy" onerror="this.style.display='none'"></td>
+                    <td><strong>${m.viewers > 1000 ? (m.viewers/1000).toFixed(1) + 'k' : m.viewers}</strong></td>
+                    <td>${m.username} <span class="badge-hd">HD</span></td>
+                    <td>${getGenderFull(m.gender)}</td>
+                    <td>${m.age === 99 ? '' : m.age}</td>
+                    <td>${m.country}</td>
+                    <td>${m.lang}</td>
+                    <td>${formatOnlineTime(m.online)}</td>
+                    <td>${m.rating.toFixed(1)}</td>
+                    <td>
+                        <div style="max-height:80px; overflow:hidden;">${bioShort}<br>${tagsHtml}</div>
+                    </td>
+                    <td><a href="${modelLink}" target="_blank" rel="noopener" class="watch-btn">Open Cam →</a></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function getGenderFull(g) {
+            g = g.toLowerCase();
+            if (g.startsWith('f')) return 'Female';
+            if (g.startsWith('m')) return 'Male';
+            if (g.startsWith('c')) return 'Couple';
+            if (g.startsWith('t')) return 'Trans';
+            return g;
+        }
+
+        function renderSidebars() {
+            let tags = {}, countries = {}, languages = {}, genders = {};
+            
+            allModels.forEach(m => {
+                genders[getGenderFull(m.gender)] = (genders[getGenderFull(m.gender)] || 0) + 1;
+                countries[m.country] = (countries[m.country] || 0) + 1;
+                languages[m.lang] = (languages[m.lang] || 0) + 1;
+                m.tags.forEach(t => {
+                    let cleanTag = t.trim();
+                    if(cleanTag) tags[cleanTag] = (tags[cleanTag] || 0) + 1;
+                });
+            });
+
+            // Render Tags (Links to your Tag Page affiliate link)
+            let tagsHtml = '';
+            Object.keys(tags).sort((a,b) => tags[b]-tags[a]).forEach(t => {
+                let tagLink = `https://www.camsoda.com/girls/tag/${t}-cams?id=bewse2&type=PPS&cmp=sidebar_tag`;
+                tagsHtml += `<a href="${tagLink}" target="_blank" rel="noopener">#${t} (${tags[t]})</a> `;
+            });
+            document.getElementById('tags-list').innerHTML = tagsHtml;
+            document.getElementById('tags-header').classList.remove('hidden');
+
+            // Render Countries (Links to Women Only page filtered by country)
+            let countriesHtml = '';
+            Object.keys(countries).sort((a,b) => countries[b]-countries[a]).forEach(c => {
+                let cLink = `https://www.camsoda.com/girls?id=bewse2&type=PPS&cmp=sidebar_country`; 
+                // Note: CamSoda URL structure for country filtering might require specific tags, defaulting to homepage for safety
+                countriesHtml += `<a href="${cLink}" target="_blank" rel="noopener">${c} (${countries[c]})</a> `;
+            });
+            document.getElementById('countries-list').innerHTML = countriesHtml;
+            document.getElementById('countries-header').classList.remove('hidden');
+
+            // Render Languages
+            let languagesHtml = '';
+            Object.keys(languages).sort((a,b) => languages[b]-languages[a]).forEach(l => {
+                languagesHtml += `<a href="https://www.camsoda.com/girls?id=bewse2&type=PPS&cmp=sidebar_lang" target="_blank" rel="noopener">${l} (${languages[l]})</a> `;
+            });
+            document.getElementById('languages-list').innerHTML = languagesHtml;
+            document.getElementById('languages-header').classList.remove('hidden');
+
+            // Render Genders
+            let gendersHtml = '';
+            Object.keys(genders).forEach(g => {
+                gendersHtml += `<a href="#" onclick="filterGender('${g[0].toLowerCase()}'); return false;">${g} (${genders[g]})</a> `;
+            });
+            document.getElementById('genders-list').innerHTML = gendersHtml;
+            document.getElementById('genders-header').classList.remove('hidden');
+        }
+
+        // Event Listeners for UI
+        document.querySelectorAll('#gender-filters button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('#gender-filters button').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentGenderFilter = btn.dataset.gender;
+                renderTable();
+            });
+        });
+
+        document.querySelectorAll('th[data-sort]').forEach(th => {
+            th.addEventListener('click', () => {
+                let col = th.dataset.sort;
+                if (currentSort.col === col) {
+                    currentSort.order = currentSort.order === 'asc' ? 'desc' : 'asc';
+                } else {
+                    currentSort.col = col;
+                    currentSort.order = col === 'viewers' ? 'desc' : 'asc';
+                }
+                
+                // Update visual arrows
+                document.querySelectorAll('th').forEach(t => {
+                    t.textContent = t.textContent.replace(/[▼▲]/g, '').replace('↕', '');
+                    if (t.dataset.sort === col) {
+                        t.textContent += currentSort.order === 'desc' ? ' ▼' : ' ▲';
+                    } else {
+                        t.textContent += ' ↕';
+                    }
+                });
+                
+                renderTable();
+            });
+        });
+
+        function filterGender(g) {
+            currentGenderFilter = g;
+            document.querySelectorAll('#gender-filters button').forEach(b => {
+                b.classList.toggle('active', b.dataset.gender === g);
+            });
+            renderTable();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Initialize
+        fetchModels();
+    </script>
 </body>
 </html>
