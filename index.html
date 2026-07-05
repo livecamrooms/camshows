@@ -10,7 +10,7 @@
     <style>
         /* --- Core Directory Styling (BLACK THEME) --- */
         :root {
-            --primary: #ff0055; /* Vibrant neon pink for dark mode */
+            --primary: #ff0055; 
             --bg: #000000;
             --card-bg: #0a0a0a;
             --text: #e9ecef;
@@ -92,7 +92,7 @@
         }
         .model-table tr:hover { background: #151515; }
         
-        .cam-cell img { width: 60px; height: 45px; object-fit: cover; border-radius: 4px; background: #000; }
+        .cam-cell img { width: 60px; height: 45px; object-fit: cover; border-radius: 4px; background: #111; border: 1px solid var(--border); }
         .viewers-cell { font-weight: 700; color: var(--primary); font-size: 1.1rem; }
         .name-cell { font-weight: 600; }
         .badge.new { background: #28a745; color: #fff; font-size: 0.7rem; padding: 2px 6px; border-radius: 10px; margin-left: 5px; vertical-align: middle; }
@@ -158,7 +158,6 @@
         
         .loading { text-align: center; padding: 40px; font-size: 1.2rem; color: var(--text-muted); }
         
-        /* --- Responsive --- */
         @media (max-width: 768px) {
             .model-table th, .model-table td { padding: 8px; font-size: 0.85rem; }
             .cam-cell img { width: 40px; height: 30px; }
@@ -186,9 +185,11 @@
         <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto;">Experience the future of interactive companionship. Click the banner below to start chatting with your personalized AI companion now.</p>
         <div style="margin-top: 25px;">
             <div class="banner-item">
-                <!-- Upgraded to <video> tag so the .mp4 actually animates and loops for higher CTR! -->
                 <a href="https://www.camsoda.ai/?id=bewse2&ad_id=ai_900x250_01&cmp=black_theme_single_banner" target="_blank" rel="noopener">
-                    <video src="https://promos.camsoda.com/promos/ai-gf/banners/ai_900x250_01.mp4" autoplay muted loop playsinline></video>
+                    <!-- Added poster and fallback text to prevent black box if autoplay is blocked -->
+                    <video src="https://promos.camsoda.com/promos/ai-gf/banners/ai_900x250_01.mp4" autoplay muted loop playsinline poster="https://promos.camsoda.com/promos/ai-gf/banners/ai_900x250_01.jpg">
+                        <img src="https://promos.camsoda.com/promos/ai-gf/banners/ai_900x250_01.jpg" alt="AI Girlfriend Promo" style="width:100%; height:auto;">
+                    </video>
                 </a>
             </div>
         </div>
@@ -212,9 +213,7 @@
 
     <div class="tags-section">
         <h2>All 100+ live tags</h2>
-        <div class="tag-cloud" id="tag-cloud">
-            <!-- Tags injected via JS -->
-        </div>
+        <div class="tag-cloud" id="tag-cloud"></div>
     </div>
 
     <div class="browse-section">
@@ -235,12 +234,10 @@
 <div id="camsoda-embed" style="width:300px;"><div><div><a href="javascript:void(0)" onclick="document.getElementById('camsoda-embed').remove()">&times;</a><iframe src="https://promos.camsoda.com/embed/?id=bewse2&cmp=black_theme_embed&gender=f" frameBorder="0"></iframe></div></div></div>
 
 <script>
-    // --- State Management ---
     let allModels = [];
     let currentFilter = 'all';
     let currentSort = { key: 'viewers', asc: false };
 
-    // --- Tag Data ---
     const tagsData = [
         { name: '18', count: 159 }, { name: 'new', count: 138 }, { name: 'lovense', count: 114 }, 
         { name: 'teen', count: 110 }, { name: 'bigboobs', count: 106 }, { name: 'young', count: 105 }, 
@@ -265,10 +262,9 @@
         `).join('');
     }
 
-    // --- FIXED Data Fetching with CORS Proxy ---
     async function loadModels() {
         const apiUrl = 'https://www.camsoda.com/api/v1/browse/online';
-        const proxyUrl = 'https://api.allorigins.win/raw?url='; // Bypasses CORS
+        const proxyUrl = 'https://api.allorigins.win/raw?url='; 
         
         try {
             const response = await fetch(proxyUrl + encodeURIComponent(apiUrl));
@@ -279,7 +275,7 @@
             document.getElementById('total-count').textContent = data.count_total || allModels.length;
             renderTable();
         } catch (error) {
-            console.warn('JSON API fetch failed (CORS/Proxy issue). Falling back to official iframe embed...', error);
+            console.warn('JSON API fetch failed. Falling back to official iframe embed...', error);
             document.getElementById('model-table-container').innerHTML = `
                 <iframe src="https://feed.camsoda.com/api/v1/browse/online_embed?id=bewse2&cmp=table_feed" style="width:100%; height:800px; border:none; display:block;"></iframe>
             `;
@@ -287,14 +283,12 @@
         }
     }
 
-    // --- FIXED Table Rendering Engine with Robust Parsing ---
     function renderTable() {
         const container = document.getElementById('model-table-container');
         
-        // Robust Filter: Checks object keys OR legacy tpl array
         let filtered = currentFilter === 'all' 
             ? allModels 
-            : allModels.filter(m => (m.gender || m.gender_code || m.tpl?.[8] || 'f') === currentFilter);
+            : allModels.filter(m => (m.gender || m.gender_code || (m.tpl ? m.tpl[8] : 'f') || 'f') === currentFilter);
             
         filtered = sortModels(filtered, currentSort.key, currentSort.asc);
         document.getElementById('showing-count').textContent = `Showing ${filtered.length} of ${allModels.length} rooms`;
@@ -321,15 +315,25 @@
         `;
         
         filtered.forEach(model => {
-            // ROBUST PARSING: Supports both object keys and legacy tpl array
-            const username = model.username || model.tpl?.[1] || 'unknown';
-            const displayName = model.display_name || model.username || model.tpl?.[2] || username;
-            const viewers = model.viewers || model.num_users || model.tpl?.[4] || 0;
-            const topicRaw = model.topic || model.status || model.tpl?.[6] || '';
-            const topic = String(topicRaw).replace(/</g, '&lt;').replace(/>/g, '&gt;');
-            const genderCode = model.gender || model.gender_code || model.tpl?.[8] || 'f';
-            const followers = model.followers || model.num_followers || model.tpl?.[12] || 0;
-            const thumb = model.thumb || model.thumbnail || model.tpl?.[10] || '';
+            const username = model.username || (model.tpl ? model.tpl[1] : 'unknown') || 'unknown';
+            const displayName = model.display_name || model.username || (model.tpl ? model.tpl[2] : username) || username;
+            const viewers = model.viewers || model.num_users || (model.tpl ? model.tpl[4] : 0) || 0;
+            
+            // FIX: Escape special characters like | and \n to prevent table layout shifts
+            const topicRaw = model.topic || model.status || (model.tpl ? model.tpl[6] : '') || '';
+            const topic = String(topicRaw).replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\|/g, '&#124;').replace(/\n/g, ' ');
+            
+            const genderCode = model.gender || model.gender_code || (model.tpl ? model.tpl[8] : 'f') || 'f';
+            const followers = model.followers || model.num_followers || (model.tpl ? model.tpl[12] : 0) || 0;
+            
+            // FIX: Bulletproof thumbnail extraction with protocol-relative URL fix and SVG fallback
+            let thumbRaw = model.thumb || model.thumb_url || model.thumbnail || model.image_url || model.avatar || '';
+            if (!thumbRaw && model.tpl && Array.isArray(model.tpl)) {
+                thumbRaw = model.tpl[10] || '';
+            }
+            const thumb = thumbRaw 
+                ? (thumbRaw.startsWith('//') ? 'https:' + thumbRaw : thumbRaw) 
+                : 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="45" viewBox="0 0 60 45"><rect width="60" height="45" fill="%23222"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%23888" font-family="sans-serif" font-size="10">LIVE</text></svg>';
             
             const genderMap = { 'f': 'Female', 'm': 'Male', 'c': 'Couple', 't': 'Trans' };
             const gender = genderMap[genderCode] || 'Unknown';
@@ -338,7 +342,7 @@
             
             html += `
                 <tr>
-                    <td class="cam-cell"><img src="${thumb}" alt="${displayName}" loading="lazy" onerror="this.style.display='none'"></td>
+                    <td class="cam-cell"><img src="${thumb}" alt="${displayName}" loading="lazy"></td>
                     <td class="viewers-cell"><strong>${viewers}</strong></td>
                     <td class="name-cell">${displayName} ${model.new ? '<span class="badge new">NEW</span>' : ''}</td>
                     <td class="gender-cell">${gender}</td>
@@ -366,26 +370,25 @@
         });
     }
 
-    // --- FIXED Sorting Logic ---
     function sortModels(models, key, asc) {
         return [...models].sort((a, b) => {
             let valA, valB;
             switch(key) {
                 case 'viewers': 
-                    valA = a.viewers || a.num_users || a.tpl?.[4] || 0; 
-                    valB = b.viewers || b.num_users || b.tpl?.[4] || 0; 
+                    valA = a.viewers || a.num_users || (a.tpl ? a.tpl[4] : 0) || 0; 
+                    valB = b.viewers || b.num_users || (b.tpl ? b.tpl[4] : 0) || 0; 
                     break;
                 case 'name': 
-                    valA = (a.display_name || a.username || a.tpl?.[2] || '').toLowerCase(); 
-                    valB = (b.display_name || b.username || b.tpl?.[2] || '').toLowerCase(); 
+                    valA = (a.display_name || a.username || (a.tpl ? a.tpl[2] : '') || '').toLowerCase(); 
+                    valB = (b.display_name || b.username || (b.tpl ? b.tpl[2] : '') || '').toLowerCase(); 
                     break;
                 case 'gender': 
-                    valA = a.gender || a.gender_code || a.tpl?.[8] || ''; 
-                    valB = b.gender || b.gender_code || b.tpl?.[8] || ''; 
+                    valA = a.gender || a.gender_code || (a.tpl ? a.tpl[8] : '') || ''; 
+                    valB = b.gender || b.gender_code || (b.tpl ? b.tpl[8] : '') || ''; 
                     break;
                 case 'followers': 
-                    valA = a.followers || a.num_followers || a.tpl?.[12] || 0; 
-                    valB = b.followers || b.num_followers || b.tpl?.[12] || 0; 
+                    valA = a.followers || a.num_followers || (a.tpl ? a.tpl[12] : 0) || 0; 
+                    valB = b.followers || b.num_followers || (b.tpl ? b.tpl[12] : 0) || 0; 
                     break;
                 default: return 0;
             }
