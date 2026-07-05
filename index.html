@@ -262,31 +262,46 @@
     }
 
     async function loadModels() {
-        const apiUrl = 'https://www.camsoda.com/api/v1/browse/online';
-        const proxies = [
-            'https://corsproxy.io/?url=',
-            'https://api.allorigins.win/raw?url=',
-            'https://api.codetabs.com/v1/proxy?quest='
-        ];
-        
+        // Primary: CamSoda's official public feed endpoint. This is CORS-enabled
+        // (Access-Control-Allow-Origin: *) and affiliate-tagged, so no third-party
+        // CORS proxy is needed (those were unreliable and are kept only as fallback).
+        const feedUrl = 'https://feed.camsoda.com/api/v1/browse/online_embed?id=bewse2&cmp=table_feed';
         let data = null;
-        
-        for (const proxy of proxies) {
-            try {
-                const response = await fetch(proxy + encodeURIComponent(apiUrl));
-                if (!response.ok) continue;
-                const text = await response.text();
-                data = JSON.parse(text);
-                if (data && data.results) {
-                    console.log(`Successfully fetched data using proxy: ${proxy}`);
-                    break;
+
+        try {
+            const response = await fetch(feedUrl);
+            if (response.ok) {
+                data = await response.json();
+            }
+        } catch (e) {
+            console.warn('Official feed endpoint failed, falling back to CORS proxies...', e);
+        }
+
+        if (!data || !data.results) {
+            const apiUrl = 'https://www.camsoda.com/api/v1/browse/online';
+            const proxies = [
+                'https://corsproxy.io/?url=',
+                'https://api.allorigins.win/raw?url=',
+                'https://api.codetabs.com/v1/proxy?quest='
+            ];
+
+            for (const proxy of proxies) {
+                try {
+                    const response = await fetch(proxy + encodeURIComponent(apiUrl));
+                    if (!response.ok) continue;
+                    const text = await response.text();
+                    data = JSON.parse(text);
+                    if (data && data.results) {
+                        console.log(`Successfully fetched data using proxy: ${proxy}`);
+                        break;
+                    }
+                } catch (e) {
+                    console.warn(`Proxy ${proxy} failed. Trying next...`);
+                    continue;
                 }
-            } catch (e) {
-                console.warn(`Proxy ${proxy} failed. Trying next...`);
-                continue;
             }
         }
-        
+
         if (data && data.results) {
             allModels = data.results;
             document.getElementById('total-count').textContent = data.count_total || allModels.length;
