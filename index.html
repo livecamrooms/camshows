@@ -137,27 +137,22 @@
         .tag-link:hover .count { color: #fff; }
         
         /* --- AI Banners --- */
-        .banner-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            justify-content: center;
-            margin-top: 20px;
-        }
         .banner-item {
             background: #000;
             border: 1px solid var(--border);
             border-radius: 8px;
             overflow: hidden;
             transition: transform 0.2s, border-color 0.2s;
+            display: inline-block;
+            max-width: 100%;
         }
         .banner-item:hover {
-            transform: scale(1.03);
+            transform: scale(1.02);
             border-color: var(--primary);
         }
-        .banner-item img {
+        .banner-item video, .banner-item img {
             display: block;
-            max-width: 100%;
+            width: 100%;
             height: auto;
         }
         
@@ -185,22 +180,17 @@
         <p>Currently indexing <strong id="total-count">0</strong> live rooms across <strong>100+</strong> tags. Tap any column header to re-sort. Filter by gender below.</p>
     </div>
 
-    <!-- AI BANNERS SECTION -->
-    <section class="banners-section">
+    <!-- SINGLE AI BANNER SECTION -->
+    <section class="banners-section" style="text-align: center;">
         <h2>Meet Your AI Girlfriend</h2>
-        <p style="color: var(--text-muted);">Explore the latest AI companion promos. Click any banner to start chatting now.</p>
-        <div class="banner-grid">
-            <!-- 900x250 Wide Banners -->
-            <div class="banner-item"><a href="https://www.camsoda.ai/?id=bewse2&ad_id=ai_900x250_01&cmp=black_theme_banners" target="_blank" rel="noopener"><img src="https://promos.camsoda.com/promos/ai-gf/banners/ai_900x250_01.mp4" alt="AI GF Promo" loading="lazy"></a></div>
-            <div class="banner-item"><a href="https://www.camsoda.ai/?id=bewse2&ad_id=ai_900x250_02&cmp=black_theme_banners" target="_blank" rel="noopener"><img src="https://promos.camsoda.com/promos/ai-gf/banners/ai_900x250_02.mp4" alt="AI GF Promo" loading="lazy"></a></div>
-            <div class="banner-item"><a href="https://www.camsoda.ai/?id=bewse2&ad_id=ai_900x250_03&cmp=black_theme_banners" target="_blank" rel="noopener"><img src="https://promos.camsoda.com/promos/ai-gf/banners/ai_900x250_03.mp4" alt="AI GF Promo" loading="lazy"></a></div>
-            
-            <!-- 300x250 Standard Banners -->
-            <div class="banner-item"><a href="https://www.camsoda.ai/?id=bewse2&ad_id=ai_300x250_01&cmp=black_theme_banners" target="_blank" rel="noopener"><img src="https://promos.camsoda.com/promos/ai-gf/banners/ai_300x250_01.mp4" alt="AI GF Promo" loading="lazy"></a></div>
-            <div class="banner-item"><a href="https://www.camsoda.ai/?id=bewse2&ad_id=ai_300x250_02&cmp=black_theme_banners" target="_blank" rel="noopener"><img src="https://promos.camsoda.com/promos/ai-gf/banners/ai_300x250_02.mp4" alt="AI GF Promo" loading="lazy"></a></div>
-            <div class="banner-item"><a href="https://www.camsoda.ai/?id=bewse2&ad_id=ai_300x250_03&cmp=black_theme_banners" target="_blank" rel="noopener"><img src="https://promos.camsoda.com/promos/ai-gf/banners/ai_300x250_03.mp4" alt="AI GF Promo" loading="lazy"></a></div>
-            <div class="banner-item"><a href="https://www.camsoda.ai/?id=bewse2&ad_id=ai_300x250_04&cmp=black_theme_banners" target="_blank" rel="noopener"><img src="https://promos.camsoda.com/promos/ai-gf/banners/ai_300x250_04.mp4" alt="AI GF Promo" loading="lazy"></a></div>
-            <div class="banner-item"><a href="https://www.camsoda.ai/?id=bewse2&ad_id=ai_300x250_05&cmp=black_theme_banners" target="_blank" rel="noopener"><img src="https://promos.camsoda.com/promos/ai-gf/banners/ai_300x250_05.mp4" alt="AI GF Promo" loading="lazy"></a></div>
+        <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto;">Experience the future of interactive companionship. Click the banner below to start chatting with your personalized AI companion now.</p>
+        <div style="margin-top: 25px;">
+            <div class="banner-item">
+                <!-- Upgraded to <video> tag so the .mp4 actually animates and loops for higher CTR! -->
+                <a href="https://www.camsoda.ai/?id=bewse2&ad_id=ai_900x250_01&cmp=black_theme_single_banner" target="_blank" rel="noopener">
+                    <video src="https://promos.camsoda.com/promos/ai-gf/banners/ai_900x250_01.mp4" autoplay muted loop playsinline></video>
+                </a>
+            </div>
         </div>
     </section>
 
