@@ -186,7 +186,6 @@
         <div style="margin-top: 25px;">
             <div class="banner-item">
                 <a href="https://www.camsoda.ai/?id=bewse2&ad_id=ai_900x250_01&cmp=black_theme_single_banner" target="_blank" rel="noopener">
-                    <!-- Added poster and fallback text to prevent black box if autoplay is blocked -->
                     <video src="https://promos.camsoda.com/promos/ai-gf/banners/ai_900x250_01.mp4" autoplay muted loop playsinline poster="https://promos.camsoda.com/promos/ai-gf/banners/ai_900x250_01.jpg">
                         <img src="https://promos.camsoda.com/promos/ai-gf/banners/ai_900x250_01.jpg" alt="AI Girlfriend Promo" style="width:100%; height:auto;">
                     </video>
@@ -262,24 +261,48 @@
         `).join('');
     }
 
+    // --- UPGRADED: Multi-Proxy Fallback Chain for Bulletproof Fetching ---
     async function loadModels() {
         const apiUrl = 'https://www.camsoda.com/api/v1/browse/online';
-        const proxyUrl = 'https://api.allorigins.win/raw?url='; 
         
-        try {
-            const response = await fetch(proxyUrl + encodeURIComponent(apiUrl));
-            if (!response.ok) throw new Error('Proxy response was not ok');
-            const data = await response.json();
-            
-            allModels = data.results || [];
+        // Chain of reliable CORS proxies to try sequentially
+        const proxies = [
+            'https://corsproxy.io/?url=',
+            'https://api.allorigins.win/raw?url=',
+            'https://api.codetabs.com/v1/proxy?quest='
+        ];
+        
+        let data = null;
+        
+        for (const proxy of proxies) {
+            try {
+                const response = await fetch(proxy + encodeURIComponent(apiUrl));
+                if (!response.ok) continue;
+                
+                // Get text first to safely parse JSON (prevents crashes if proxy returns HTML error)
+                const text = await response.text();
+                data = JSON.parse(text);
+                
+                if (data && data.results) {
+                    console.log(`Successfully fetched data using proxy: ${proxy}`);
+                    break; // Success, exit loop
+                }
+            } catch (e) {
+                console.warn(`Proxy ${proxy} failed or returned invalid JSON. Trying next...`);
+                continue;
+            }
+        }
+        
+        if (data && data.results) {
+            allModels = data.results;
             document.getElementById('total-count').textContent = data.count_total || allModels.length;
             renderTable();
-        } catch (error) {
-            console.warn('JSON API fetch failed. Falling back to official iframe embed...', error);
+        } else {
+            console.warn('All proxies failed. Falling back to official iframe embed...');
             document.getElementById('model-table-container').innerHTML = `
-                <iframe src="https://feed.camsoda.com/api/v1/browse/online_embed?id=bewse2&cmp=table_feed" style="width:100%; height:800px; border:none; display:block;"></iframe>
+                <iframe src="https://feed.camsoda.com/api/v1/browse/online_embed?id=bewse2&cmp=table_feed" style="width:100%; height:800px; border:none; display:block; border-radius:8px;"></iframe>
             `;
-            document.getElementById('showing-count').textContent = 'Live feed embedded (API blocked by CORS)';
+            document.getElementById('showing-count').textContent = 'Showing live feed via embedded widget';
         }
     }
 
@@ -319,14 +342,12 @@
             const displayName = model.display_name || model.username || (model.tpl ? model.tpl[2] : username) || username;
             const viewers = model.viewers || model.num_users || (model.tpl ? model.tpl[4] : 0) || 0;
             
-            // FIX: Escape special characters like | and \n to prevent table layout shifts
             const topicRaw = model.topic || model.status || (model.tpl ? model.tpl[6] : '') || '';
             const topic = String(topicRaw).replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\|/g, '&#124;').replace(/\n/g, ' ');
             
             const genderCode = model.gender || model.gender_code || (model.tpl ? model.tpl[8] : 'f') || 'f';
             const followers = model.followers || model.num_followers || (model.tpl ? model.tpl[12] : 0) || 0;
             
-            // FIX: Bulletproof thumbnail extraction with protocol-relative URL fix and SVG fallback
             let thumbRaw = model.thumb || model.thumb_url || model.thumbnail || model.image_url || model.avatar || '';
             if (!thumbRaw && model.tpl && Array.isArray(model.tpl)) {
                 thumbRaw = model.tpl[10] || '';
