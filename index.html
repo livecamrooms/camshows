@@ -3,65 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Cam Room Index</title>
+    <title>Live Cam Room Index — Sorted, Tagged, and Revshare-Linked</title>
     <meta name="description" content="Live cam room index, sorted by tag, country and language. Compare viewers, HD streams, and locations across thousands of live broadcasters in one dense, scannable table.">
     <meta name="robots" content="index, follow">
     
     <style>
-        /* --- Core Directory Styling --- */
+        /* --- Core Directory Styling (BLACK THEME) --- */
         :root {
-            --primary: #d91656;
-            --bg: #f8f9fa;
-            --card-bg: #ffffff;
-            --text: #212529;
-            --text-muted: #6c757d;
-            --border: #dee2e6;
+            --primary: #ff0055; /* Vibrant neon pink for dark mode */
+            --bg: #000000;
+            --card-bg: #0a0a0a;
+            --text: #e9ecef;
+            --text-muted: #888888;
+            --border: #222222;
         }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; line-height: 1.6; color: var(--text); background: var(--bg); margin: 0; padding: 0; }
+        
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; 
+            line-height: 1.6; 
+            color: var(--text); 
+            background: var(--bg); 
+            margin: 0; 
+            padding: 0; 
+        }
         .container { max-width: 1300px; margin: 0 auto; padding: 20px; }
         
-        header { background: #212529; color: #fff; padding: 30px 20px; text-align: center; border-bottom: 4px solid var(--primary); }
+        header { 
+            background: #050505; 
+            color: #fff; 
+            padding: 30px 20px; 
+            text-align: center; 
+            border-bottom: 2px solid var(--primary); 
+        }
         header h1 { margin: 0; font-size: 2.2rem; font-weight: 800; }
-        header p { margin: 10px 0 0; color: #adb5bd; font-size: 1.1rem; }
+        header p { margin: 10px 0 0; color: var(--text-muted); font-size: 1.1rem; }
         
-        .intro-card { background: var(--card-bg); padding: 25px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 25px; border-left: 5px solid var(--primary); }
+        .intro-card, .table-container, .tags-section, .browse-section, .banners-section { 
+            background: var(--card-bg); 
+            padding: 25px; 
+            border-radius: 8px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5); 
+            margin-bottom: 25px; 
+            border: 1px solid var(--border);
+        }
         .intro-card p { margin: 0 0 10px; font-size: 1.05rem; }
         .intro-card strong { color: var(--primary); }
         
+        /* --- Filters & Table --- */
         .filters { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; align-items: center; }
         .filters span { font-weight: 600; margin-right: 10px; }
-        .filter-btn { padding: 8px 16px; border: 1px solid var(--border); background: var(--card-bg); border-radius: 20px; cursor: pointer; font-weight: 500; transition: all 0.2s; font-size: 0.95rem; }
-        .filter-btn:hover, .filter-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+        .filter-btn { 
+            padding: 8px 16px; 
+            border: 1px solid var(--border); 
+            background: var(--card-bg); 
+            color: var(--text);
+            border-radius: 20px; 
+            cursor: pointer; 
+            font-weight: 500; 
+            transition: all 0.2s; 
+            font-size: 0.95rem; 
+        }
+        .filter-btn:hover, .filter-btn.active { 
+            background: var(--primary); 
+            color: #fff; 
+            border-color: var(--primary); 
+        }
         
-        .table-container { background: var(--card-bg); border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); overflow: hidden; margin-bottom: 30px; }
         .model-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
-        .model-table th { background: #f1f3f5; padding: 12px 15px; text-align: left; font-weight: 600; border-bottom: 2px solid var(--border); cursor: pointer; user-select: none; white-space: nowrap; }
-        .model-table th:hover { background: #e9ecef; }
+        .model-table th { 
+            background: #111; 
+            color: var(--text);
+            padding: 12px 15px; 
+            text-align: left; 
+            font-weight: 600; 
+            border-bottom: 2px solid var(--border); 
+            cursor: pointer; 
+            user-select: none; 
+            white-space: nowrap; 
+        }
+        .model-table th:hover { background: #1a1a1a; }
         .model-table th .sort-icon { margin-left: 5px; opacity: 0.5; }
         .model-table th.sorted .sort-icon { opacity: 1; color: var(--primary); }
         
-        .model-table td { padding: 12px 15px; border-bottom: 1px solid var(--border); vertical-align: middle; }
-        .model-table tr:hover { background: #f8f9fa; }
+        .model-table td { 
+            padding: 12px 15px; 
+            border-bottom: 1px solid var(--border); 
+            vertical-align: middle; 
+        }
+        .model-table tr:hover { background: #151515; }
         
         .cam-cell img { width: 60px; height: 45px; object-fit: cover; border-radius: 4px; background: #000; }
         .viewers-cell { font-weight: 700; color: var(--primary); font-size: 1.1rem; }
         .name-cell { font-weight: 600; }
         .badge.new { background: #28a745; color: #fff; font-size: 0.7rem; padding: 2px 6px; border-radius: 10px; margin-left: 5px; vertical-align: middle; }
         .topic-cell { color: var(--text-muted); font-size: 0.9rem; max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .watch-btn { display: inline-block; padding: 6px 12px; background: var(--primary); color: #fff; text-decoration: none; border-radius: 4px; font-weight: 600; font-size: 0.9rem; transition: background 0.2s; white-space: nowrap; }
-        .watch-btn:hover { background: #b01045; }
+        .watch-btn { 
+            display: inline-block; 
+            padding: 6px 12px; 
+            background: var(--primary); 
+            color: #fff; 
+            text-decoration: none; 
+            border-radius: 4px; 
+            font-weight: 600; 
+            font-size: 0.9rem; 
+            transition: background 0.2s; 
+            white-space: nowrap; 
+        }
+        .watch-btn:hover { background: #cc0044; }
         
-        .tags-section, .browse-section { background: var(--card-bg); padding: 25px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 25px; }
-        .tags-section h2, .browse-section h2 { margin-top: 0; border-bottom: 2px solid var(--primary); padding-bottom: 10px; display: inline-block; }
+        /* --- Tags & Categories --- */
+        .tags-section h2, .browse-section h2, .banners-section h2 { 
+            margin-top: 0; 
+            border-bottom: 2px solid var(--primary); 
+            padding-bottom: 10px; 
+            display: inline-block; 
+            color: var(--primary);
+        }
         
         .tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 15px; }
-        .tag-link { display: inline-block; padding: 6px 12px; background: #e9ecef; color: var(--text); text-decoration: none; border-radius: 4px; font-size: 0.9rem; transition: all 0.2s; }
-        .tag-link:hover { background: var(--primary); color: #fff; }
+        .tag-link { 
+            display: inline-block; 
+            padding: 6px 12px; 
+            background: #1a1a1a; 
+            color: var(--text); 
+            text-decoration: none; 
+            border-radius: 4px; 
+            font-size: 0.9rem; 
+            transition: all 0.2s; 
+            border: 1px solid var(--border);
+        }
+        .tag-link:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
         .tag-link .count { color: var(--text-muted); font-size: 0.8rem; margin-left: 4px; }
         .tag-link:hover .count { color: #fff; }
         
+        /* --- AI Banners --- */
+        .banner-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .banner-item {
+            background: #000;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .banner-item:hover {
+            transform: scale(1.03);
+            border-color: var(--primary);
+        }
+        .banner-item img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+        
         .loading { text-align: center; padding: 40px; font-size: 1.2rem; color: var(--text-muted); }
         
+        /* --- Responsive --- */
         @media (max-width: 768px) {
             .model-table th, .model-table td { padding: 8px; font-size: 0.85rem; }
             .cam-cell img { width: 40px; height: 30px; }
@@ -82,6 +184,25 @@
         <p>Live cam room index, sorted by tag, country and language. Compare viewers, HD streams, languages, and locations across thousands of live broadcasters in one dense, scannable table.</p>
         <p>Currently indexing <strong id="total-count">0</strong> live rooms across <strong>100+</strong> tags. Tap any column header to re-sort. Filter by gender below.</p>
     </div>
+
+    <!-- AI BANNERS SECTION -->
+    <section class="banners-section">
+        <h2>Meet Your AI Girlfriend</h2>
+        <p style="color: var(--text-muted);">Explore the latest AI companion promos. Click any banner to start chatting now.</p>
+        <div class="banner-grid">
+            <!-- 900x250 Wide Banners -->
+            <div class="banner-item"><a href="https://www.camsoda.ai/?id=bewse2&ad_id=ai_900x250_01&cmp=black_theme_banners" target="_blank" rel="noopener"><img src="https://promos.camsoda.com/promos/ai-gf/banners/ai_900x250_01.mp4" alt="AI GF Promo" loading="lazy"></a></div>
+            <div class="banner-item"><a href="https://www.camsoda.ai/?id=bewse2&ad_id=ai_900x250_02&cmp=black_theme_banners" target="_blank" rel="noopener"><img src="https://promos.camsoda.com/promos/ai-gf/banners/ai_900x250_02.mp4" alt="AI GF Promo" loading="lazy"></a></div>
+            <div class="banner-item"><a href="https://www.camsoda.ai/?id=bewse2&ad_id=ai_900x250_03&cmp=black_theme_banners" target="_blank" rel="noopener"><img src="https://promos.camsoda.com/promos/ai-gf/banners/ai_900x250_03.mp4" alt="AI GF Promo" loading="lazy"></a></div>
+            
+            <!-- 300x250 Standard Banners -->
+            <div class="banner-item"><a href="https://www.camsoda.ai/?id=bewse2&ad_id=ai_300x250_01&cmp=black_theme_banners" target="_blank" rel="noopener"><img src="https://promos.camsoda.com/promos/ai-gf/banners/ai_300x250_01.mp4" alt="AI GF Promo" loading="lazy"></a></div>
+            <div class="banner-item"><a href="https://www.camsoda.ai/?id=bewse2&ad_id=ai_300x250_02&cmp=black_theme_banners" target="_blank" rel="noopener"><img src="https://promos.camsoda.com/promos/ai-gf/banners/ai_300x250_02.mp4" alt="AI GF Promo" loading="lazy"></a></div>
+            <div class="banner-item"><a href="https://www.camsoda.ai/?id=bewse2&ad_id=ai_300x250_03&cmp=black_theme_banners" target="_blank" rel="noopener"><img src="https://promos.camsoda.com/promos/ai-gf/banners/ai_300x250_03.mp4" alt="AI GF Promo" loading="lazy"></a></div>
+            <div class="banner-item"><a href="https://www.camsoda.ai/?id=bewse2&ad_id=ai_300x250_04&cmp=black_theme_banners" target="_blank" rel="noopener"><img src="https://promos.camsoda.com/promos/ai-gf/banners/ai_300x250_04.mp4" alt="AI GF Promo" loading="lazy"></a></div>
+            <div class="banner-item"><a href="https://www.camsoda.ai/?id=bewse2&ad_id=ai_300x250_05&cmp=black_theme_banners" target="_blank" rel="noopener"><img src="https://promos.camsoda.com/promos/ai-gf/banners/ai_300x250_05.mp4" alt="AI GF Promo" loading="lazy"></a></div>
+        </div>
+    </section>
 
     <div class="filters">
         <span>Filter:</span>
@@ -118,6 +239,10 @@
         </div>
     </div>
 </div>
+
+<!-- FLOATING EMBED WIDGET -->
+<style>#camsoda-embed{position:fixed;bottom:20px;right:20px;z-index:9999;max-width:100%;}#camsoda-embed > div{width:100%;padding-top:75%;overflow:hidden;}#camsoda-embed > div > div{position:absolute;top:0;right:0;left:0;bottom:0;}#camsoda-embed iframe{width:100%;height:100%;}@media screen and (min-width:410px){#camsoda-embed iframe{border-radius:5px;}}#camsoda-embed > div > div > a{position:absolute;top:3px;right:6px;display:inline-block;content: "d7";color:#FFF;font-size:30px;line-height:30px;font-family:arial;text-shadow:#000 0px 1px 1px;text-decoration:none;}</style>
+<div id="camsoda-embed" style="width:300px;"><div><div><a href="javascript:void(0)" onclick="document.getElementById('camsoda-embed').remove()">&times;</a><iframe src="https://promos.camsoda.com/embed/?id=bewse2&cmp=black_theme_embed&gender=f" frameBorder="0"></iframe></div></div></div>
 
 <script>
     // --- State Management ---
